@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAZON</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="uno.png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: grid;
+            place-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #padre {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            gap: 20px;
+            justify-content: center;
+        }
+        input {
+            width: 100px;
+            height: 50px;
+            cursor: pointer;
+        }
+        #si {
+            background-color: rgb(21, 255, 0);
+        }
+        #no {
+            background-color: red;
+            position: relative; /* Changed to relative for initial position */
+        }
+        #mostrar-si {
+           position: relative;
+           width: 100%;
+           height: 100vh;
+           margin: 0;
+           padding: 0;
+         display: none;
+            
+        }
+        #mostrar-si img{
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+        }
+        #imgdos{
+            opacity: 1;
+        }
+        #segundos{
+            position: absolute;
+            color: rgb(255, 0, 0);
+            font-size: 3em;
+            left: 20%;
+            top: 30%;
+            background-color: #f0f0f0;
+            box-shadow: 10px 10px 30px red;
+        }
+        @media (max-width: 800px) {
+            #padre {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            input {
+                width: 80px; 
+                height: 40px;
+            }
+            #segundos{
+            position: absolute;
+            color: rgb(255, 0, 0);
+            font-size: 3em;
+            left: 0;
+            top: 30%;
+            background-color: #f0f0f0;
+            box-shadow: 10px 10px 30px red;
+        }
+         #si{
+            position: relative;
+            top: -30px;
+         }
+        #no{
+            position: relative;
+            top: 50px;
+        }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1 id="texto-uno">¿QUIERES SER MI NOVIA?</h1>
+<div id="padre">
+    <input type="button" value="SI" id="si">
+    <input type="button" value="NO" id="no">
+</div>
+<section id="mostrar-si">
+  <img src="dos.jpg" id="imguno"> 
+  <img src="uno.png" id="imgdos">
+    <h1 id="segundos">¡Gracias por aceptar ser mi novia!</h1>
+</section>
+
+<script>
+    document.getElementById('si').onclick = function() {
+        document.getElementById('mostrar-si').style.display = 'block';
+        document.getElementById('texto-uno').style.display = 'none';
+        document.getElementById('padre').style.display = 'none';
+    };
+
+    // Función para mover el botón "NO"
+    function moveNoButton(event) {
+        var bodyWidth = document.body.clientWidth;
+        var bodyHeight = document.body.clientHeight;
+        var noButton = event.target;
+
+        var newX = Math.floor(Math.random() * (bodyWidth - noButton.offsetWidth));
+        var newY = Math.floor(Math.random() * (bodyHeight - noButton.offsetHeight));
+
+        noButton.style.position = 'absolute';
+        noButton.style.left = newX + 'px';
+        noButton.style.top = newY + 'px';
+    }
+
+    // Mover el botón "NO" cuando se hace clic
+    document.getElementById('no').onclick = function(event) {
+        moveNoButton(event);
+    };
+
+    // Mover el botón "NO" cuando el mouse pasa sobre él
+    document.getElementById('no').addEventListener('mouseover', function(event) {
+        moveNoButton(event);
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Selecciona ambos elementos de imagen por sus IDs
+    var imgUno = document.getElementById('imguno');
+    var imgDos = document.getElementById('imgdos');
+
+    // Asegura que imgUno sea visible al inicio, por si acaso.
+    imgUno.style.opacity = 1;
+    imgDos.style.opacity = 0; // Asegurar que imgDos comienza oculto
+
+    // Espera 3 segundos antes de ejecutar la siguiente acción
+    setTimeout(function() {
+        // Cambia la opacidad de imgUno a 0 para ocultarlo
+        imgUno.style.opacity = 0;
+
+        // Inmediatamente después de ocultar imgUno, cambia la opacidad de imgDos a 1 para mostrarlo
+        // Utiliza setTimeout con un retraso muy corto para asegurar que el cambio se perciba como "instantáneo" después de la animación
+        setTimeout(function() {
+            imgDos.style.opacity = 1;
+        }, 10); // Un retraso mínimo para permitir que el navegador procese la ocultación del primero antes de mostrar el segundo
+
+    }, 2000); // 3000 milisegundos equivalen a 3 segundos
+});
+
+</script>
+</body>
+</html>
